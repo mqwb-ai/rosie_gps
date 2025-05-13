@@ -36,7 +36,24 @@
     referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 
-  <elevenlabs-convai agent-id="yGoz6EftNQNzlMMOJPrT" dynamic-variables='{"user_location" : "Madison Wisconsin"}'></elevenlabs-convai>
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const output = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+            document.getElementById("output").textContent = output;
+          },
+          error => {
+            document.getElementById("output").textContent = "Error getting location.";
+          }
+        );
+      } else {
+        document.getElementById("output").textContent = "Geolocation not supported.";
+      }
+    }
+  </script>
+  <elevenlabs-convai agent-id="yGoz6EftNQNzlMMOJPrT" dynamic-variables='{"user_location" : getLocation()}'></elevenlabs-convai>
                                                                     
   <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 </body>
