@@ -29,24 +29,24 @@
   </style>
 </head>
 <body>
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d8317.040319096177!2d-122.17374453067367!3d37.427741487833515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sstanford%20campus%20gates%20building!5e1!3m2!1sen!2sus!4v1746215639547!5m2!1sen!2sus"
-    allowfullscreen=""
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
+
+
 
 <script>
   // Global variable you can use elsewhere
   let userLocationText = "unavailable location";
+  let lat_float = 0.00;
+  let long_float = 0.00;
 
   // This runs automatically on page load
   window.addEventListener("load", () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const lat = position.coords.latitude.toFixed(6);
-          const lon = position.coords.longitude.toFixed(6);
+          lat_float = position.coords.latitude
+          long_float = position.coords.longitude
+          const lat = lat_float.toFixed(6);
+          const lon = long_float.toFixed(6);
           userLocationText = `latitude ${lat}, longitude ${lon}.`;
           console.log("Location retrieved:", userLocationText);
         },
@@ -95,7 +95,13 @@
       widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
     }
   });
-</script>                                                                    
+</script> 
+  <iframe
+    src="https://www.google.com/maps?q=${lat},${long}&hl=EN&z=14&output=embed"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
   <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 </body>
 </html>
