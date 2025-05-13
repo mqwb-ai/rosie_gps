@@ -36,24 +36,37 @@
     referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 
-  <script>
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            const output = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
-            document.getElementById("output").textContent = output;
-          },
-          error => {
-            document.getElementById("output").textContent = "Error getting location.";
-          }
-        );
-      } else {
-        document.getElementById("output").textContent = "Geolocation not supported.";
-      }
+<script>
+  // Global variable you can use elsewhere
+  let userLocationText = "unavailable location";
+
+  // This runs automatically on page load
+  window.addEventListener("load", () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude.toFixed(6);
+          const lon = position.coords.longitude.toFixed(6);
+          userLocationText = `latitude ${lat}, longitude ${lon}.`;
+          console.log("Location retrieved:", userLocationText);
+        },
+        (error) => {
+          console.warn("Geolocation error:", error.message);
+          userLocationText = "unavailable location";
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    } else {
+      console.warn("Geolocation not supported.");
+      userLocationText = "unavailable location";
     }
-  </script>
-  <elevenlabs-convai agent-id="yGoz6EftNQNzlMMOJPrT" dynamic-variables='{"user_location" : getLocation()}'></elevenlabs-convai>
+  });
+</script>
+  <elevenlabs-convai agent-id="yGoz6EftNQNzlMMOJPrT" dynamic-variables='{"user_location" : userLocationText}'></elevenlabs-convai>
                                                                     
   <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 </body>
