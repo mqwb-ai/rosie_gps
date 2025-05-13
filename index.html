@@ -20,7 +20,6 @@
       display: block;
     }
 
-    /* Optional: fix the widget to a corner */
     elevenlabs-convai {
       position: fixed;
       bottom: 20px;
@@ -29,51 +28,54 @@
     }
   </style>
 </head>
-  
-<elevenlabs-convai
-  id="chat-widget"
-  agent-id="yGoz6EftNQNzlMMOJPrT"
-  dynamic-variables='{"user_location" : "unavailable location"}'>
-</elevenlabs-convai>
+<body>
+  <!-- The map iframe must be present in the DOM -->
+  <iframe
+    id="user-map"
+    src="https://www.google.com/maps?q=Madison,+WI&z=14&output=embed"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
 
-<script>
-  window.addEventListener("load", () => {
-    const widget = document.getElementById("chat-widget");
-    const map = document.getElementById("user-map");
+  <!-- The ElevenLabs chat widget -->
+  <elevenlabs-convai
+    id="chat-widget"
+    agent-id="yGoz6EftNQNzlMMOJPrT"
+    dynamic-variables='{"user_location" : "unavailable location"}'>
+  </elevenlabs-convai>
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const lat = position.coords.latitude.toFixed(6);
-          const lon = position.coords.longitude.toFixed(6);
-          const locationString = `Latitude: ${lat}, Longitude: ${lon}`;
+  <script>
+    window.addEventListener("load", () => {
+      const widget = document.getElementById("chat-widget");
+      const map = document.getElementById("user-map");
 
-          // Update chat widget with location
-          widget.setAttribute("dynamic-variables", `{"user_location": "${locationString}"}`);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude.toFixed(6);
+            const lon = position.coords.longitude.toFixed(6);
+            const locationString = `Latitude: ${lat}, Longitude: ${lon}`;
 
-          // Update embedded map to show user location
-          const mapSrc = `https://maps.google.com/maps?q=${lat},${lon}&z=14&output=embed`;
-          map.src = mapSrc;
-        },
-        (error) => {
-          console.warn("Geolocation error:", error.message);
-
-          // Keep your original fallback for the widget
-          widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
-
-          // Fallback to Madison Wisconsin
-          map.src = "https://www.google.com/maps?q=Madison,+WI&z=14&output=embed";
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0
-        }
-      );
-    } else {
-      widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
-      map.src = "https://www.google.com/maps?q=Madison,+WI&z=14&output=embed";
-
-    }
-  });
-</script>
+            widget.setAttribute("dynamic-variables", `{"user_location": "${locationString}"}`);
+            map.src = `https://maps.google.com/maps?q=${lat},${lon}&z=14&output=embed`;
+          },
+          (error) => {
+            console.warn("Geolocation error:", error.message);
+            widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
+            map.src = "https://www.google.com/maps?q=Madison,+WI&z=14&output=embed";
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+          }
+        );
+      } else {
+        widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
+        map.src = "https://www.google.com/maps?q=Madison,+WI&z=14&output=embed";
+      }
+    });
+  </script>
+</body>
+</html>
