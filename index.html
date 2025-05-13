@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Rosie Chatbot</title>
   <style>
     html, body {
@@ -20,6 +19,7 @@
       display: block;
     }
 
+    /* Position the ElevenLabs AI widget in the bottom-right corner */
     elevenlabs-convai {
       position: fixed;
       bottom: 20px;
@@ -29,7 +29,7 @@
   </style>
 </head>
 <body>
-  <!-- The map iframe must be present in the DOM -->
+  <!-- 🗺️ Embedded Google Map -->
   <iframe
     id="user-map"
     src="https://www.google.com/maps?q=Madison,+WI&z=14&output=embed"
@@ -38,7 +38,7 @@
     referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 
-  <!-- The ElevenLabs chat widget -->
+  <!-- 🧠 ElevenLabs Conversational AI Widget -->
   <elevenlabs-convai
     id="chat-widget"
     agent-id="yGoz6EftNQNzlMMOJPrT"
@@ -57,11 +57,16 @@
             const lon = position.coords.longitude.toFixed(6);
             const locationString = `Latitude: ${lat}, Longitude: ${lon}`;
 
+            // Update the AI widget with the user's location
             widget.setAttribute("dynamic-variables", `{"user_location": "${locationString}"}`);
-            map.src = `https://maps.google.com/maps?q=${lat},${lon}&z=14&output=embed`;
+
+            // Update the map to center on the user's location
+            const mapSrc = `https://maps.google.com/maps?q=${lat},${lon}&z=14&output=embed`;
+            map.src = mapSrc;
           },
           (error) => {
             console.warn("Geolocation error:", error.message);
+            // Keep default fallback location (Madison, WI)
             widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
             map.src = "https://www.google.com/maps?q=Madison,+WI&z=14&output=embed";
           },
@@ -72,6 +77,7 @@
           }
         );
       } else {
+        // Geolocation not supported
         widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
         map.src = "https://www.google.com/maps?q=Madison,+WI&z=14&output=embed";
       }
