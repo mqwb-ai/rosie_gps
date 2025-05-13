@@ -67,7 +67,6 @@
   });
 </script>
 
-  <elevenlabs-convai id="chat-widget" agent-id="yGoz6EftNQNzlMMOJPrT" dynamic-variables='{"user_location" : "unavailable location"}'></elevenlabs-convai>
 
 <script>
   window.addEventListener("load", () => {
@@ -96,12 +95,15 @@
     }
   });
 </script> 
+  
   <iframe
     src="https://www.google.com/maps?q=${lat_float},${long_float}&hl=EN&z=14&output=embed"
     allowfullscreen=""
     loading="lazy"
     referrerpolicy="no-referrer-when-downgrade">
   </iframe>
+  
+  <elevenlabs-convai id="chat-widget" agent-id="yGoz6EftNQNzlMMOJPrT" dynamic-variables='{"user_location" : "unavailable location"}'></elevenlabs-convai>
   <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 </body>
 </html>
