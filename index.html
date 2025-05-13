@@ -66,8 +66,36 @@
     }
   });
 </script>
-  <elevenlabs-convai agent-id="yGoz6EftNQNzlMMOJPrT" dynamic-variables='{"user_location" : userLocationText}'></elevenlabs-convai>
-                                                                    
+
+  <elevenlabs-convai id="chat-widget" agent-id="yGoz6EftNQNzlMMOJPrT" dynamic-variables='{"user_location" : "unavailable location"}'></elevenlabs-convai>
+
+<script>
+  window.addEventListener("load", () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude.toFixed(6);
+          const lon = position.coords.longitude.toFixed(6);
+          const locationString = `Latitude: ${lat}, Longitude: ${lon}`;
+
+          // Update the dynamic-variables attribute with the location string
+          const widget = document.getElementById("chat-widget");
+          widget.setAttribute("dynamic-variables", `{"user_location": "${locationString}"}`);
+        },
+        (error) => {
+          console.warn("Geolocation error:", error.message);
+          // Fallback location if there's an error
+          const widget = document.getElementById("chat-widget");
+          widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    } else {
+      const widget = document.getElementById("chat-widget");
+      widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
+    }
+  });
+</script>                                                                    
   <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 </body>
 </html>
