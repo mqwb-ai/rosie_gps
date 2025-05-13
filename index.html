@@ -30,11 +30,14 @@
 </head>
 <body>
   <iframe
-    src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d8317.040319096177!2d-122.17374453067367!3d37.427741487833515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sstanford%20campus%20gates%20building!5e1!3m2!1sen!2sus!4v1746215639547!5m2!1sen!2sus"
+    const originalSrc="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d8317.040319096177!2d-122.17374453067367!3d37.427741487833515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sstanford%20campus%20gates%20building!5e1!3m2!1sen!2sus!4v1746215639547!5m2!1sen!2sus"
+    id="map"
     allowfullscreen=""
     loading="lazy"
     referrerpolicy="no-referrer-when-downgrade">
   </iframe>
+
+
 
 <script>
   // Global variable you can use elsewhere
@@ -45,10 +48,16 @@
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const lat = position.coords.latitude.toFixed(6);
-          const lon = position.coords.longitude.toFixed(6);
-          userLocationText = `latitude ${lat}, longitude ${lon}.`;
-          console.log("Location retrieved:", userLocationText);
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          userLocationText = `latitude ${lat.toFixed(6)}, longitude ${lon.toFixed(6)}.`;
+
+          // Replace 2d (longitude) and 3d (latitude) in the URL
+          const updatedSrc = originalSrc
+              .replace(/!2d-?\d+(\.\d+)?/, `!2d${lon}`)
+              .replace(/!3d-?\d+(\.\d+)?/, `!3d${lat}`);
+
+            document.getElementById("map").src = updatedSrc;
         },
         (error) => {
           console.warn("Geolocation error:", error.message);
