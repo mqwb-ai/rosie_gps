@@ -40,8 +40,8 @@
           // Keep your original fallback for the widget
           widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
 
-          // Fallback to Stanford Gates Building map
-          map.src = "https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d8317.040319096177!2d-122.17374453067367!3d37.427741487833515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sstanford%20campus%20gates%20building!5e1!3m2!1sen!2sus!4v1746215639547!5m2!1sen!2sus";
+          // Fallback to Madison Wisconsin
+          map.src = "https://www.google.com/maps?q=Madison,+WI&z=14&output=embed";
         },
         {
           enableHighAccuracy: true,
@@ -51,7 +51,8 @@
       );
     } else {
       widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
-      map.src = "https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d8317.040319096177!2d-122.17374453067367!3d37.427741487833515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sstanford%20campus%20gates%20building!5e1!3m2!1sen!2sus!4v1746215639547!5m2!1sen!2sus";
+      map.src = "https://www.google.com/maps?q=Madison,+WI&z=14&output=embed";
+
     }
   });
 </script>
