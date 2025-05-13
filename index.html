@@ -35,8 +35,8 @@
 <script>
   // Global variable you can use elsewhere
   let userLocationText = "unavailable location";
-  let lat_float = 0.00;
-  let long_float = 0.00;
+  let lat_float = 43.073051;
+  let long_float = -89.401230;
 
   // This runs automatically on page load
   window.addEventListener("load", () => {
@@ -75,8 +75,8 @@
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const lat = position.coords.latitude.toFixed(6);
-          const lon = position.coords.longitude.toFixed(6);
-          const locationString = `Latitude: ${lat}, Longitude: ${lon}`;
+          const long = position.coords.longitude.toFixed(6);
+          const locationString = `Latitude: ${lat_float}, Longitude: ${long_float}`;
 
           // Update the dynamic-variables attribute with the location string
           const widget = document.getElementById("chat-widget");
@@ -97,7 +97,7 @@
   });
 </script> 
   <iframe
-    src="https://www.google.com/maps?q=${lat},${long}&hl=EN&z=14&output=embed"
+    src="https://www.google.com/maps?q=${lat_float},${long_float}&hl=EN&z=14&output=embed"
     allowfullscreen=""
     loading="lazy"
     referrerpolicy="no-referrer-when-downgrade">
