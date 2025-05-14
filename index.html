@@ -66,7 +66,7 @@
           const accessToken = 'pk.eyJ1IjoibXF3YiIsImEiOiJjbWFvaDF4bDkwN2VnMmpvZml6bnAweHg0In0.tyJgNnhPeFrzmBUglDYrug';
 
           const mapboxUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lon},${lat}.json?access_token=${accessToken}`
-          const placeName
+          let placeName = ""
           
           fetch(mapboxUrl)
             .then(response => response.json())
