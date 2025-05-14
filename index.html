@@ -48,15 +48,15 @@
           // Test lat & lon (Madison WI)
           const madisonLat = 43.073051
           const madisonLon = -89.401230
-          const lat = madisonLat
-          const lon = madisonLon
+          //const lat = madisonLat
+          //const lon = madisonLon
 
           // Default lat & long (Stanford campus)
           const stanfordLat = 37.428230
           const stanfordLon = -122.168861
           
-          //const lat = position.coords.latitude
-          //const lon = position.coords.longitude
+          const lat = position.coords.latitude
+          const lon = position.coords.longitude
           const latString = lat.toFixed(6)
           const lonString = lon.toFixed(6);
           const locationString = `Latitude: ${latString}, Longitude: ${lonString}`;
