@@ -68,7 +68,13 @@
               .replace(/!3d-?\d+(\.\d+)?/, `!3d${lat}`)  // Replace latitude
               .replace(/!2m1!1s[^!]+/, '!2m1!1s');        // Replace search query with empty string
 
-            document.getElementById("map").src = updatedSrc;
+            // document.getElementById("map").src = updatedSrc;
+          
+            const zoom = 15;
+            const embeddedMapUrl = `https://maps.google.com/maps?q=${lat},${lon}&z=${zoom}&output=embed`;
+            document.getElementById("map").src = embeddedMapUrl;
+
+
           
         },
         (error) => {
