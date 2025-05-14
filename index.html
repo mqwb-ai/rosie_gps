@@ -47,6 +47,7 @@
           const lat = position.coords.latitude.toFixed(16);
           const lon = position.coords.longitude.toFixed(16);
           const locationString = `Latitude: ${lat}, Longitude: ${lon}`;
+          alert(locationString);
 
           // Update the dynamic-variables attribute with the location string
           const widget = document.getElementById("chat-widget");
