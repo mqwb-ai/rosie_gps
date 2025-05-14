@@ -44,16 +44,21 @@
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const templateSrc = "https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d8317.040319096177!2d-122.17374453067367!3d37.427741487833515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sstanford%20campus%20gates%20building!5e1!3m2!1sen!2sus!4v1746215639547!5m2!1sen!2sus"
-
+          
           // Test lat & lon (Madison WI)
-          const lat = 43.073051
-          const lon = -89.401230
+          const madisonLat = 43.073051
+          const madisonLon = -89.401230
+          const lat = madisonLat
+          const lon = madisonLon
+
+          // Default lat & long (Stanford campus)
+          const stanfordLat = 37.428230
+          const stanfordLon = -122.168861
           
           //const lat = position.coords.latitude
           //const lon = position.coords.longitude
-          const latString = lat.toFixed(8)
-          const lonString = lon.toFixed(8);
+          const latString = lat.toFixed(6)
+          const lonString = lon.toFixed(6);
           const locationString = `Latitude: ${latString}, Longitude: ${lonString}`;
           console.log(locationString);
 
@@ -61,15 +66,17 @@
           const widget = document.getElementById("chat-widget");
           widget.setAttribute("dynamic-variables", `{"user_location": "${locationString}"}`);
 
-          //Update the embedded map with the lat/lon
+            // Original approach: hack the Google pb string in the embed URL
+            const templateSrc = "https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d8317.040319096177!2d-122.17374453067367!3d37.427741487833515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sstanford%20campus%20gates%20building!5e1!3m2!1sen!2sus!4v1746215639547!5m2!1sen!2sus"
+            //Update the embedded map with the lat/lon
             // Replace 2d (longitude) and 3d (latitude) in the URL
             const updatedSrc = templateSrc
               .replace(/!2d-?\d+(\.\d+)?/, `!2d${lon}`)  // Replace longitude
               .replace(/!3d-?\d+(\.\d+)?/, `!3d${lat}`)  // Replace latitude
               .replace(/!2m1!1s[^!]+/, '!2m1!1s');        // Replace search query with empty string
-
             // document.getElementById("map").src = updatedSrc;
-          
+
+            // New approach: build up a standalone embedded map URL
             const zoom = 15;
             const embeddedMapUrl = `https://maps.google.com/maps?q=${lat},${lon}&z=${zoom}&output=embed`;
             document.getElementById("map").src = embeddedMapUrl;
@@ -82,14 +89,17 @@
           // Fallback location if there's an error
           const widget = document.getElementById("chat-widget");
           widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
-          document.getElementById("map").src = templateSrc;
+          //document.getElementById("map").src = templateSrc;
+          document.getElementById("map").src = `https://maps.google.com/maps?q=${stanfordLat},${stanfordLon}&z=${zoom}&output=embed`;
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     } else {
       const widget = document.getElementById("chat-widget");
       widget.setAttribute("dynamic-variables", '{"user_location": "unavailable location"}');
-      document.getElementById("map").src = templateSrc;
+      //document.getElementById("map").src = templateSrc;
+      document.getElementById("map").src = `https://maps.google.com/maps?q=${stanfordLat},${stanfordLon}&z=${zoom}&output=embed`;
+
     }
   });
 </script>                                                                    
