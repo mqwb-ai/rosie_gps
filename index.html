@@ -44,8 +44,8 @@
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const lat = position.coords.latitude.toFixed(12);
-          const lon = position.coords.longitude.toFixed(12);
+          const lat = position.coords.latitude.toFixed(16);
+          const lon = position.coords.longitude.toFixed(16);
           const locationString = `Latitude: ${lat}, Longitude: ${lon}`;
 
           // Update the dynamic-variables attribute with the location string
