@@ -64,7 +64,7 @@
 
           // Update the dynamic-variables attribute with the location string
           const widget = document.getElementById("chat-widget");
-          widget.setAttribute("dynamic-variables", `{"user_gps": "${locationString}, "user_placename": Stanford"}`);
+          widget.setAttribute("dynamic-variables", `{"user_gps": "${locationString}", "user_placename": "Stanford"}`);
           console.log("Stanford")
 
             // Original approach: hack the Google pb string in the embed URL
@@ -89,7 +89,7 @@
           console.warn("Geolocation error:", error.message);
           // Fallback location if there's an error
           const widget = document.getElementById("chat-widget");
-          widget.setAttribute("dynamic-variables", '{"user_gps": "unavailable location"}, "user_placename": "unavailable location"');
+          widget.setAttribute("dynamic-variables", '{"user_gps": "unavailable location", "user_placename": "unavailable location"}');
           //document.getElementById("map").src = templateSrc;
           document.getElementById("map").src = `https://maps.google.com/maps?q=${stanfordLat},${stanfordLon}&z=${zoom}&output=embed`;
         },
